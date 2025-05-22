@@ -34,7 +34,7 @@ colormap = np.array([
     [0, 0, 0],
     [183, 183, 183],
     [76, 255, 0],
-], dtype=np.float) / 255
+], dtype=np.float64) / 255
 
 default_text = \
     "Welcome to the toolbox! To begin, load an utterance from your datasets or record one " \
@@ -381,9 +381,11 @@ class UI(QDialog):
         self.app.processEvents()
 
     def set_loading(self, value, maximum=1):
-        self.loading_bar.setValue(value * 100)
-        self.loading_bar.setMaximum(maximum * 100)
-        self.loading_bar.setTextVisible(value != 0)
+        ivalue = int(value * 100)
+        imax = int(maximum * 100)
+        self.loading_bar.setMaximum(imax)
+        self.loading_bar.setValue(ivalue)
+        self.loading_bar.setTextVisible(ivalue != 0)
         self.app.processEvents()
 
     def populate_gen_options(self, seed, trim_silences):
